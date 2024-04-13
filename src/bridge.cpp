@@ -132,7 +132,7 @@ create_bidirectional_bridge(
   // added for supporting tf_static in parameter bridge 
   auto ros2_publisher_qos = rclcpp::QoS(rclcpp::KeepLast(queue_size));
   if (topic_name == "/tf_static") {
-          RCLCPP_INFO(ros2_node->get_logger(), "<2> Setting QoS to keep_all msgs for topic /tf_static.");
+          RCLCPP_INFO(ros2_node->get_logger(), "<1> Setting QoS to keep_all msgs for topic /tf_static.");
           ros2_publisher_qos.keep_all();
           ros2_publisher_qos.transient_local();
   handles.bridge1to2 = create_bridge_from_1_to_2(
