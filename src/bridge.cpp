@@ -131,16 +131,22 @@ create_bidirectional_bridge(
   BridgeHandles handles;
   // added for supporting tf_static in parameter bridge 
   auto ros2_publisher_qos = rclcpp::QoS(rclcpp::KeepLast(queue_size));
-  if (topic_name == "tf_static") {
-	  RCLCPP_INFO(ros2_node->get_logger(), "Setting QoS to keep_all msgs for topic /tf_static.");
-  	  ros2_publisher_qos.keep_all();
+  if (topic_name == "/tf_static") {
+          RCLCPP_INFO(ros2_node->get_logger(), "<2> Setting QoS to keep_all msgs for topic /tf_static.");
+          ros2_publisher_qos.keep_all();
           ros2_publisher_qos.transient_local();
+  handles.bridge1to2 = create_bridge_from_1_to_2(
+    ros1_node, ros2_node,
+    ros1_type_name, topic_name, queue_size, ros2_type_name, topic_name, ros2_publisher_qos);
   }
-  // end //  
-
+  else{
   handles.bridge1to2 = create_bridge_from_1_to_2(
     ros1_node, ros2_node,
     ros1_type_name, topic_name, queue_size, ros2_type_name, topic_name, queue_size);
+  }
+
+  // end //  
+
   handles.bridge2to1 = create_bridge_from_2_to_1(
     ros2_node, ros1_node,
     ros2_type_name, topic_name, queue_size, ros1_type_name, topic_name, queue_size,
@@ -164,15 +170,20 @@ create_bidirectional_bridge(
   BridgeHandles handles;
   // added for supporting tf_static in parameter bridge
   auto ros2_publisher_qos = rclcpp::QoS(rclcpp::KeepLast(queue_size));
-  if (topic_name == "tf_static") {
-          RCLCPP_INFO(ros2_node->get_logger(), "Setting QoS to keep_all msgs for topic /tf_static.");
+  if (topic_name == "/tf_static") {
+          RCLCPP_INFO(ros2_node->get_logger(), "<2> Setting QoS to keep_all msgs for topic /tf_static.");
           ros2_publisher_qos.keep_all();
           ros2_publisher_qos.transient_local();
+  handles.bridge1to2 = create_bridge_from_1_to_2(
+    ros1_node, ros2_node,
+    ros1_type_name, topic_name, queue_size, ros2_type_name, topic_name, ros2_publisher_qos);
   }
-  // end //
+  else{
   handles.bridge1to2 = create_bridge_from_1_to_2(
     ros1_node, ros2_node,
     ros1_type_name, topic_name, queue_size, ros2_type_name, topic_name, publisher_qos);
+  }
+  // end //
   handles.bridge2to1 = create_bridge_from_2_to_1(
     ros2_node, ros1_node,
     ros2_type_name, topic_name, queue_size, ros1_type_name, topic_name, queue_size,
