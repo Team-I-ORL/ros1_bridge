@@ -144,6 +144,11 @@ void update_bridge(
   for (auto ros1_publisher : ros1_publishers) {
     // identify topics available as ROS 1 publishers as well as ROS 2 subscribers
     auto topic_name = ros1_publisher.first;
+    std::string depth = "/head_camera/depth" 
+    std::string ir = "/head_camera/ir"
+    if (topic_name.size() >= depth.size() && topic_name.substr(0, depth.size()) == depth || topic_name.size() >= ir.size() && topic_name.substr(0, ir.size()) == ir) {
+      continue;
+    }  
     std::string ros1_type_name = ros1_publisher.second;
     std::string ros2_type_name;
 
